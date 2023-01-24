@@ -17,10 +17,10 @@ Docker should now be set up! Verify by connecting to the ip address with the por
 ### Docker Startup - Over USB
 1. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 2. Open device manager
-        1. Windows button + R
-        2. Type devmgmt.msc and press enter
+    1. Windows button + R
+    2. Type devmgmt.msc and press enter
 3. Find the USB Serial port of your Jetson
-        1. Double click each USB Serial Device entry so you can check its properties. Go to the “Details” tab, and select “Hardware Ids”. If you see VID 0955 and PID 7020, that USB Serial Device for your Jetson developer kit.
+    1. Double click each USB Serial Device entry so you can check its properties. Go to the “Details” tab, and select “Hardware Ids”. If you see VID 0955 and PID 7020, that USB Serial Device for your Jetson developer kit.
 4. Open PuTTY. Switch to Serial. Type in the COM## Port into the Serial Line space. Type 115200 for speed.
 5. Press Open.
 6. Type in password jetbot
