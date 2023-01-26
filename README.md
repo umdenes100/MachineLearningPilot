@@ -30,3 +30,5 @@ Recommended: Power Jetson with 12 V Barrel cord and connect via USB to Micro USB
     1. If prompted for password, type: jetson
     
 Docker should now be set up! Verify by connecting to the ip 192.168.55.1:8888 to see if the Jupyter notebook is up and running!
+
+## Note: Juptyter password: dlinano
