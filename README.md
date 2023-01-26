@@ -2,7 +2,10 @@
 
 Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES 100.
 
-## The following verifiably works on Windows, process likely different for MacOS.
+## Docker Setup Script:
+sudo docker run --runtime nvidia -it --rm --network host --volume ~/nvdli-data/Main/:/nvdli-nano/ --device /dev/video0 nvcr.io/nvidia/dli/dli-nano-ai:v2.0.2-r32.7.1
+
+### The following verifiably works on Windows, process likely different for MacOS.
 ### Docker Startup - Over WiFi (Jetson MUST have WiFi chip for this):
 1. Open command prompt
     1. Windows button + R
