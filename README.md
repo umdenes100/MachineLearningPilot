@@ -16,6 +16,7 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 Docker should now be set up! Verify by connecting to the ip address of the Jetson with the port 8888 to see if the Jupyter notebook is up and running!
 
 ### Docker Startup - Over USB
+Recommended: Power Jetson with 12 V Barrel cord and connect via USB to Micro USB. **CRUCIAL: MAKE SURE JUMPER ON JETSON BOARD IS CONNECTED SO YOU DON'T FRY YOUR USB PORT**
 1. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 2. Open device manager
     1. Windows button + R
