@@ -2,8 +2,12 @@
 
 Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES 100.
 
-## Docker Setup Script:
-sudo docker run --runtime nvidia -it --rm --network host --volume ~/nvdli-data/Main/:/nvdli-nano/ --device /dev/video0 nvcr.io/nvidia/dli/dli-nano-ai:v2.0.2-r32.7.1
+### Jetson Docker Setup:
+1. Turn on your Jetson and hook up to a monitor via HDMI. Also plug in a USB mouse and keyboard.
+2. Download the file `docker_dli_setup.sh` and the `thumbs_activity_src` folder (should contain 3 files) from this repository and place it in your Home directory on the Jetson Nano.
+3. Open terminal and type `chmod +x ./docker_dli_setup.sh` and press enter. This makes the script runnable.
+4. Then, type the name of the file, `./docker_dli_setip.sh` and press enter to run the script.
+5. Your docker should now be setup for the 3 ML Pilot sections (0101, 0201, 0501), a test section for testing/debugging (9999). There should also be 4 scripts, 1 for each section and 1 that will be used for access of all sections at once.
 
 ### The following verifiably works on Windows, process likely different for MacOS.
 ### Docker Startup - Over WiFi (Jetson MUST have WiFi chip for this):
@@ -13,7 +17,7 @@ sudo docker run --runtime nvidia -it --rm --network host --volume ~/nvdli-data/M
 2. Type ssh jetson@\[ip address of Jetson\] and press enter
     1. If prompted, type: yes 
 3. Type in password: jetson
-4. Making sure the camera is plugged in, type ./docker_dli_run.sh and press enter
+4. Making sure the camera is plugged in, type ./docker_dli_run_sec####.sh and press enter
     1. If prompted for password, type: jetson
 
 Docker should now be set up! Verify by connecting to the ip address of the Jetson with the port 8888 to see if the Jupyter notebook is up and running!
@@ -29,7 +33,7 @@ Recommended: Power Jetson with 12 V Barrel cord and connect via USB to Micro USB
 4. Open PuTTY. Switch to Serial. Type in the COM# Port into the Serial Line space. Type 115200 for speed.
 5. Press Open.
 6. Type in password: jetson
-7. Making sure the camera is plugged in, type ./docker_dli_run.sh and press enter
+7. Making sure the camera is plugged in, type ./docker_dli_run_sec####.sh and press enter
     1. If prompted for password, type: jetson
     
 Docker should now be set up! Verify by connecting to the ip 192.168.55.1:8888 to see if the Jupyter notebook is up and running!
