@@ -2,7 +2,6 @@
 
 Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES 100.
 
-## Note: Setup script and source folder not uploaded to Repo yet
 ### Jetson Docker Setup:
 1. Turn on your Jetson and hook up to a monitor via HDMI. Also plug in a USB mouse and keyboard.
 2. Download the file `docker_dli_setup.sh` and the `thumbs_activity_src` folder (should contain 3 files) from this repository and place it in the Home directory on the Jetson Nano. **Make sure you do not change the names of anything in the folder**
