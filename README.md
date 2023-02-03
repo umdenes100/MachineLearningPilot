@@ -25,7 +25,13 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 10. Your docker should now be setup for the 3 ML Pilot sections (0101, 0201, 0501), a test section for testing/debugging (9999). You can check this using `ls` and `cd`. There should also be 4 scripts, 1 for each section and 1 that will be used for access of all sections at once.
 11. Optional: Put images on thumb drive, type `cp -r [DIRECTORY OF DRIVE]/images/ ./ML-exp-enes100/` and press enter (do this after everything else)
 
+### Debugging
+If there is a mounting error with the thumb drive you plug in:
+1. Type `sudo mkdir ./media/usb/` and press enter
+2. Type `sudo mount [TODO]`
+3. `lsblk` to check if it worked.
 
+## Docker Startup
 
 ### The following verifiably works on Windows, process likely different for MacOS.
 ### Docker Startup - Over WiFi (Jetson MUST have WiFi chip for this):
