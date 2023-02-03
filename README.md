@@ -22,7 +22,7 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 7. Type `ls` to check if the files have been copied.
 8. Type `chmod +x ./docker_dli_setup.sh` and press enter to make the script runnable
 9. Then, type the name of the file, `./docker_dli_setup.sh` and press enter to run the script.
-10. Your docker should now be setup for the 3 ML Pilot sections (0101, 0201, 0501), a test section for testing/debugging (9999). There should also be 4 scripts, 1 for each section and 1 that will be used for access of all sections at once.
+10. Your docker should now be setup for the 3 ML Pilot sections (0101, 0201, 0501), a test section for testing/debugging (9999). You can check this using `ls` and `cd`. There should also be 4 scripts, 1 for each section and 1 that will be used for access of all sections at once.
 11. Optional: Put images on thumb drive, type `cp -r [DIRECTORY OF DRIVE]/images/ ./ML-exp-enes100/` and press enter (do this after everything else)
 
 
