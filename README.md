@@ -16,7 +16,8 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 1. Connect with headless mode to Jetson Nano (follow docker startup steps shown below, but don't run ./docker_dli_run command)
 2. Plug in a thumb drive with the file `docker_dli_setup.sh` and the `thumbs_activity_src` folder (should contain 3 files) from this repository
 3. Type `lsblk` to display all mounted drives
-4. Check for the directory of the drive at `sda1`.
+4. Check for the directory of the drive at `sda1` or something similar.
+    1. If there is no directory mounted, follow the debugging steps below.
 5. Type `cp [DIRECTORY OF DRIVE]/docker_dli_setup.sh ./` and press enter
 6. Type `cp -r [DIRECTORY OF DRIVE]/thumbs_activity_src/ ./` and press enter
 7. Type `ls` to check if the files have been copied.
@@ -27,8 +28,9 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 
 ### Debugging
 If there is a mounting error with the thumb drive you plug in:
-1. Type `sudo mkdir ./media/usb/` and press enter
-2. Type `sudo mount [TODO]`
+1. Type `sudo mkdir ./media/usb` and press enter
+2. Type `sudo mount /dev/sda1 ./media/usb`
+    1. `sda1` may be something else, check what it is in the `lsblk` list.
 3. `lsblk` to check if it worked.
 
 ## Docker Startup
