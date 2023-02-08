@@ -28,12 +28,11 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 
 ### Debugging
 If there is a mounting error with the thumb drive you plug in:
-1. Type `sudo mkdir media` and press enter
-2. Type `sudo mkdir media/usb` and press enter
-3. Type `sudo mount /dev/sda1 ./media/usb`
+1. Type `sudo mkdir -p media/usb` and press enter
+2. Type `sudo mount /dev/sda1 ./media/usb`
     1. `sda1` may be something else, check what it is in the `lsblk` list.
-4. `lsblk` to check if it worked.
-5. Your directory is now ./media/usb
+3. `lsblk` to check if it worked.
+4. Your directory is now ./media/usb
 
 ## Docker Startup
 
