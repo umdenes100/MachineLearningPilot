@@ -33,7 +33,7 @@ void send() {
         teamName[i - 2] = buff[i]; //Move the teamName
         i++;
       }
-      //            putl((char*) &teamName);
+      //            putl((char*) &teamName);  
       doc["teamName"] = teamName;
       doc["teamType"] = teamType;
       arucoConfirmed = false;
@@ -95,17 +95,43 @@ void send() {
       doc["message"] = buff;
       break;
     case OP_PRED:
-      doc["op"] = "pred";
-      doc["teamName"] = teamName;
-      camera_fb_t *fb = esp_camera_fb_get();
+      camera_fb_t * fb = esp_camera_fb_get();
+      
       if (!fb) {
         Serial.println("Camera capture failed");
-      } else {
-        Serial.println("Camera capture successful!");
+        doc["op"] = "image_failure";
+        serializeJson(doc, buff);
+        client.send(buff);
+        return;
       }
-      const char *data = (const char *)fb->buf;
-      doc["message"] = *data;
-      break;
+      
+      Serial.println("Camera capture successful!");
+      Serial.println(fb->len);
+      doc["op"] = "image_reset";
+      serializeJson(doc, buff);
+      serializeJson(doc, Serial);
+      client.send(buff);
+      
+      delay(1000);
+      size_t size = fb->len;
+      unsigned packageSize = 2000;
+      char data[packageSize]; // each pixel is 1 byte, should be 2 hex digits surely
+      for (size_t j = 0 ; j < size ; j += packageSize) {
+        for (size_t i = 0; i < packageSize && (i + j) < size; i++) { // soooo not cool :(
+          byte pixel = fb->buf[i+j]; // buffer pixel should be 1 byte surely
+          sprintf(data + (2*i), "%02x", pixel);
+          //Serial.println(data);
+        }
+        doc.clear();
+        doc["op"] = "image_chunk";
+        doc["chunk"] = data;
+        doc["index"] = j/packageSize;
+        serializeJson(doc, buff);
+        serializeJson(doc, Serial);
+        client.send(buff);
+      }
+      esp_camera_fb_return(fb); 
+      return;
   }
   //        Ok, now we need to send this baddy out on the websocket.
   serializeJson(doc, buff);
