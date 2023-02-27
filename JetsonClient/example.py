@@ -5,21 +5,26 @@ import torch.nn.functional as F
 import JetsonWSClient
 import threading
 
-categories = ['l', 'tf']
+print('setup...')
+categories = ['greg', 'josh']
 device = torch.device('cuda')
 model = torchvision.models.resnet18(pretrained=True)
 model.fc = torch.nn.Linear(512, 2)
 model = model.to(device)
-model.load_state_dict(torch.load('../data/dirt-mission/Josh_LTF/model.pth'))
+model.load_state_dict(torch.load('../model.path'))
+print('setup complete')
 
 
 def handler(image):
-    preprocessed = preprocess(image)
-    output = model(preprocessed)
+    output = model(image)
     output = F.softmax(output, dim=1).detach().cpu().numpy().flatten()
+    print(categories[output.argmax()])
     return categories[output.argmax()]
+
 
 client = JetsonWSClient.JetsonClient(handler, 'Team Bofa')
 
-# threading.Thread(target=client.ws.run_forever, name="WS Thread",daemon=False).start()
+#threading.Thread(target=client.ws.run_forever, name="WS Thread",daemon=True).start()
+
+print('Starting...')
 client.ws.run_forever()

@@ -83,7 +83,7 @@ bool arucoConfirmed = false;
 //Because of the asynchronous nature of the code and the synchronous nature of the original codebase
 bool needToSendAruco = false, needToSendMission = false;
 
-StaticJsonDocument<300> doc;
+StaticJsonDocument<2500> doc;
 const byte FLUSH_SEQUENCE[] = {0xFF, 0xFE, 0xFD, 0xFC};
 
 WebsocketsClient client;
@@ -144,7 +144,7 @@ void setup() {
   }
 #endif
 #else
-  Serial.begin(9600);
+  Serial.begin(115200); // 9600 monkaS
 #endif
 
 #ifdef DEBUG
@@ -153,30 +153,8 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_NETWORK, NULL);
   // Connect to Wifi. At an attempt at robustness, we will also catch any incoming serial data. However, we are only going to hold one command.
-  bool stop = true; //Once we get a stop sequence (Assuming its from the begin statement) lets stop.
   while (WiFi.status() != WL_CONNECTED)
   {
-    if (not stop) {
-      if (arduinoSerial.available())
-        buff[buff_index++] = arduinoSerial.read();
-      if (
-        buff[buff_index - 4] == FLUSH_SEQUENCE[0] and
-        buff[buff_index - 3] == FLUSH_SEQUENCE[1] and
-        buff[buff_index - 2] == FLUSH_SEQUENCE[2] and
-        buff[buff_index - 1] == FLUSH_SEQUENCE[3]) {
-        stop = true;
-#ifdef DEBUG
-        ps("we got one. OP: "); Serial.println(buff[0], HEX);
-#endif
-      }
-      if (buff_index == 500) { //Buffer overflow. It is very unlikely this will occur. It could only occur with a print so we will just cut it off.
-        buff[496] = FLUSH_SEQUENCE[0];
-        buff[497] = FLUSH_SEQUENCE[1];
-        buff[498] = FLUSH_SEQUENCE[2];
-        buff[499] = FLUSH_SEQUENCE[3];
-        stop = true;
-      }
-    }
     if (millis() > 10 * 1000) {
 #ifdef DEBUG
       psl("Failed to connect...");
@@ -204,10 +182,6 @@ void setup() {
 #ifdef DEBUG
   psl("Connected to websocket");
 #endif
-  if (stop) {
-    send();
-    buff_index = 0;
-  }
 
   ESPCAMinit();
 
@@ -221,39 +195,19 @@ void setup() {
 
   client.poll();
   yield();
-}
 
-void loop() {
-  //Read in data from Arduino
-  if (arduinoSerial.available()) {
-    buff[buff_index++] = arduinoSerial.read();
-    if (buff_index == 500) { //Buffer overflow. It is very unlikely this will occur. It could only occur with a print so we will just cut it off.
-      buff[496] = FLUSH_SEQUENCE[0];
-      buff[497] = FLUSH_SEQUENCE[1];
-      buff[498] = FLUSH_SEQUENCE[2];
-      buff[499] = FLUSH_SEQUENCE[3];
-    }
-    if (
-      buff[buff_index - 4] == FLUSH_SEQUENCE[0] and
-      buff[buff_index - 3] == FLUSH_SEQUENCE[1] and
-      buff[buff_index - 2] == FLUSH_SEQUENCE[2] and
-      buff[buff_index - 1] == FLUSH_SEQUENCE[3]) { //This is the end of the sequence.
-#ifdef DEBUG
-      //            ps("sending "); p(buff_index); psl(" bytes.");
-#endif
-      send();
-      buff_index = 0;
-    }
-  }
+   Serial.println("looping...");
 
-  Serial.println("looping...");
-
-  buff[0] = 7;
+  buff[0] = 9;
   buff[1] = FLUSH_SEQUENCE[0];
   buff[2] = FLUSH_SEQUENCE[1];
   buff[3] = FLUSH_SEQUENCE[2];
   buff[4] = FLUSH_SEQUENCE[3];
   send();
+}
+
+void loop() {
+ 
 
   client.poll();
   yield();

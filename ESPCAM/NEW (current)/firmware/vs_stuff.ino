@@ -8,6 +8,7 @@
 #define OP_LOCATION_NEW 5
 
 #define OP_PRED 7
+#define OP_SEND 9
 
 //This will decode proprietary stuff and turn it into json. At the time send() is called, everything we need is in buff
 
@@ -33,7 +34,7 @@ void send() {
         teamName[i - 2] = buff[i]; //Move the teamName
         i++;
       }
-      //            putl((char*) &teamName);  
+      //            putl((char*) &teamName);
       doc["teamName"] = teamName;
       doc["teamType"] = teamType;
       arucoConfirmed = false;
@@ -94,9 +95,9 @@ void send() {
       buff[i - 1] = '\0'; //End it with the null byte.
       doc["message"] = buff;
       break;
-    case OP_PRED:
+    case OP_PRED: {
       camera_fb_t * fb = esp_camera_fb_get();
-      
+
       if (!fb) {
         Serial.println("Camera capture failed");
         doc["op"] = "image_failure";
@@ -104,34 +105,93 @@ void send() {
         client.send(buff);
         return;
       }
-      
+
       Serial.println("Camera capture successful!");
       Serial.println(fb->len);
       doc["op"] = "image_reset";
       serializeJson(doc, buff);
       serializeJson(doc, Serial);
       client.send(buff);
-      
+
       delay(1000);
       size_t size = fb->len;
+      Serial.println(size);
       unsigned packageSize = 2000;
-      char data[packageSize]; // each pixel is 1 byte, should be 2 hex digits surely
-      for (size_t j = 0 ; j < size ; j += packageSize) {
-        for (size_t i = 0; i < packageSize && (i + j) < size; i++) { // soooo not cool :(
-          byte pixel = fb->buf[i+j]; // buffer pixel should be 1 byte surely
-          sprintf(data + (2*i), "%02x", pixel);
-          //Serial.println(data);
+      char data[packageSize + 1]; // each pixel is 1 byte, should be 2 hex digits surely
+      for (size_t j = 0 ; j < size ; j += packageSize / 2) {
+        uint32_t s = millis();
+        for (size_t i = 0; i < packageSize / 2 && (i + j) < size; i++) { // soooo not cool :(
+          byte pixel = fb->buf[i + j]; // buffer pixel should be 1 byte surely
+          sprintf(data + (2 * i), "%02x", pixel);
         }
         doc.clear();
         doc["op"] = "image_chunk";
-        doc["chunk"] = data;
-        doc["index"] = j/packageSize;
+        //Serial.println(data);
+        doc["chunk"].set(data);
+        doc["index"] = j / (packageSize / 2);
         serializeJson(doc, buff);
-        serializeJson(doc, Serial);
+        //serializeJson(doc, Serial);
+        Serial.println(millis() - s);
+        delay(100);
         client.send(buff);
       }
-      esp_camera_fb_return(fb); 
-      return;
+      esp_camera_fb_return(fb);
+      doc.clear();
+      doc["op"] = "prediction_request";
+      serializeJson(doc, buff);
+      serializeJson(doc, Serial);
+      client.send(buff);
+      delay(1000);
+      return; }
+    case OP_SEND: {
+      camera_fb_t * fb = esp_camera_fb_get();
+
+      if (!fb) {
+        Serial.println("Camera capture failed");
+        doc["op"] = "image_failure";
+        serializeJson(doc, buff);
+        client.send(buff);
+        return;
+      }
+
+      Serial.println("Camera capture successful!");
+      Serial.println(fb->len);
+      doc["op"] = "image_reset";
+      serializeJson(doc, buff);
+      serializeJson(doc, Serial);
+      client.send(buff);
+
+      delay(1000);
+      size_t size = fb->len;
+      Serial.println(size);
+      unsigned packageSize = 2000;
+      char data[packageSize + 1]; // each pixel is 1 byte, should be 2 hex digits surely
+      for (size_t j = 0 ; j < size ; j += packageSize / 2) {
+        uint32_t s = millis();
+        for (size_t i = 0; i < packageSize / 2 && (i + j) < size; i++) { // soooo not cool :(
+          byte pixel = fb->buf[i + j]; // buffer pixel should be 1 byte surely
+          sprintf(data + (2 * i), "%02x", pixel);
+        }
+        doc.clear();
+        doc["op"] = "image_chunk";
+        //Serial.println(data);
+        doc["chunk"].set(data);
+        doc["index"] = j / (packageSize / 2);
+        serializeJson(doc, buff);
+        //serializeJson(doc, Serial);
+        Serial.println(millis() - s);
+        delay(100);
+        client.send(buff);
+      }
+      esp_camera_fb_return(fb);
+      doc.clear();
+      doc["category"] = "josh";
+      doc["op"] = "image_capture";
+      serializeJson(doc, buff);
+      serializeJson(doc, Serial);
+      client.send(buff);
+      delay(1000);
+      return; }
   }
   //        Ok, now we need to send this baddy out on the websocket.
   serializeJson(doc, buff);
@@ -185,6 +245,7 @@ void onMessageCallback(WebsocketsMessage message) {
 #endif
   StaticJsonDocument<300> doc;
   deserializeJson(doc, message.data());
+  Serial.println(message.data());
   if (strcmp(doc["op"], "aruco") == 0) {
     aruco_visible = doc["aruco"]["visible"];
     aruco_x = doc["aruco"]["x"];
