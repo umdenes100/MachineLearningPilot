@@ -6,8 +6,8 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 
 ### 1. [Setting up the Jetsons for ML Lesson 2](https://github.com/umdenes100/MachineLearningPilot#setting-up-the-jetsons-for-ml-lesson-2---machine-learning-experience)
 ### 2. [Starting the Docker and Getting into Jupyter Notebook](https://github.com/umdenes100/MachineLearningPilot#docker-startup)
-### 3. [Jetson Documentation](github.com/umdenes100/MachineLearningPilot#jetson-documentation)
-### 4. [Use of Jetson Functions on Arduino](github.com/umdenes100/MachineLearningPilot#Use-of-Jetson-Functions-on-Arduino)
+### 3. [Jetson Documentation](https://github.com/umdenes100/MachineLearningPilot#jetson-documentation)
+### 4. [Use of Jetson Functions on Arduino](https://github.com/umdenes100/MachineLearningPilot#use-of-jetson-functions-on-arduino)
 
 ## Setting up the Jetsons for ML Lesson 2 - Machine Learning Experience
 
