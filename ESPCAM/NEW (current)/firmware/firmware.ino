@@ -129,86 +129,114 @@ void ESPCAMinit() {
 }
 
 void setup() {
-  // Begin serial communication with Arduino
+ // Begin serial communication with Arduino
 #ifdef DEBUG
-  Serial.begin(115200);
-  Serial.println("Hellow");
-  delay(1000);
+    Serial.begin(115200);
+    Serial.println("Hellow");
+    delay(1000);
 #endif
-  //Set up the serial port.
+    //Set up the serial port.
 #ifdef USE_SWSR_AS_ARD
-  arduinoSerial.begin(9600, SWSERIAL_8N1, D3, D4, false);
+    arduinoSerial.begin(9600, SWSERIAL_8N1, D3, D4, false);
 #ifdef DEBUG
-  if (!arduinoSerial) { // If the object did not initialize, then its configuration is invalid
-    psl("Invalid SoftwareSerial pin configuration, check config");
-  }
+    if (!arduinoSerial) { // If the object did not initialize, then its configuration is invalid
+        psl("Invalid SoftwareSerial pin configuration, check config");
+    }
 #endif
 #else
-  Serial.begin(115200); // 9600 monkaS
+    Serial.begin(9600);
 #endif
 
 #ifdef DEBUG
-  psl("\n\nStarting");
+    psl("\n\nStarting");
 #endif
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(WIFI_NETWORK, NULL);
-  // Connect to Wifi. At an attempt at robustness, we will also catch any incoming serial data. However, we are only going to hold one command.
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    if (millis() > 10 * 1000) {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(WIFI_NETWORK, NULL);
+    // Connect to Wifi. At an attempt at robustness, we will also catch any incoming serial data. However, we are only going to hold one command.
+    bool stop = false; //Once we get a stop sequence (Assuming its from the begin statement) lets stop.
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        if (not stop) {
+            if (arduinoSerial.available())
+                buff[buff_index++] = arduinoSerial.read();
+            if (
+                buff[buff_index - 4] == FLUSH_SEQUENCE[0] and
+                buff[buff_index - 3] == FLUSH_SEQUENCE[1] and
+                buff[buff_index - 2] == FLUSH_SEQUENCE[2] and
+                buff[buff_index - 1] == FLUSH_SEQUENCE[3]) {
+                stop = true;
 #ifdef DEBUG
-      psl("Failed to connect...");
-      Serial.flush();
+                ps("we got one. OP: "); Serial.println(buff[0], HEX);
 #endif
-      ESP.restart();
+            }
+            if (buff_index == 500) { //Buffer overflow. It is very unlikely this will occur. It could only occur with a print so we will just cut it off.
+                buff[496] = FLUSH_SEQUENCE[0];
+                buff[497] = FLUSH_SEQUENCE[1];
+                buff[498] = FLUSH_SEQUENCE[2];
+                buff[499] = FLUSH_SEQUENCE[3];
+                stop = true;
+            }
+        }
+        if (millis() > 10 * 1000) {
+#ifdef DEBUG
+            psl("Failed to connect...");
+            Serial.flush();
+#endif
+            ESP.restart();
+        }
+        yield();
     }
-    yield();
-  }
-  client.onMessage(onMessageCallback);
+    client.onMessage(onMessageCallback);
 
-  client.onEvent(onEventsCallback);
+    client.onEvent(onEventsCallback);
 #ifdef DEBUG
-  psl("Connected to WiFi");
+    psl("Connected to WiFi");
 #endif
-  client.connect("ws://192.168.1.2:7755");
-  if (!client.available()) {
+    client.connect("ws://192.168.1.2:7755");
+    if (!client.available()) {
 #ifdef DEBUG
-    psl("Failed to connect (websocket)...");
-    Serial.flush();
+        psl("Failed to connect (websocket)...");
+        Serial.flush();
 #endif
-    delay(1000);
-    ESP.restart();
-  }
+        delay(1000);
+        ESP.restart();
+    }
 #ifdef DEBUG
-  psl("Connected to websocket");
+    psl("Connected to websocket");
 #endif
+    if (stop) {
+        send();
+        buff_index = 0;
+    }
 
   ESPCAMinit();
 
-  doc["op"] = "begin";
-  doc["teamName"] = "Team Bofa";
-  doc["teamType"] = 1;
-  doc["aruco"] = 21;
-
-  serializeJson(doc, buff);
-  client.send(buff);
-
-  client.poll();
-  yield();
-
-   Serial.println("looping...");
-
-  buff[0] = 9;
-  buff[1] = FLUSH_SEQUENCE[0];
-  buff[2] = FLUSH_SEQUENCE[1];
-  buff[3] = FLUSH_SEQUENCE[2];
-  buff[4] = FLUSH_SEQUENCE[3];
-  send();
+  
 }
 
 void loop() {
- 
+ //Read in data from Arduino
+    if (arduinoSerial.available()) {
+        buff[buff_index++] = arduinoSerial.read();
+        if (buff_index == 500) { //Buffer overflow. It is very unlikely this will occur. It could only occur with a print so we will just cut it off.
+            buff[496] = FLUSH_SEQUENCE[0];
+            buff[497] = FLUSH_SEQUENCE[1];
+            buff[498] = FLUSH_SEQUENCE[2];
+            buff[499] = FLUSH_SEQUENCE[3];
+        }
+        if (
+            buff[buff_index - 4] == FLUSH_SEQUENCE[0] and
+            buff[buff_index - 3] == FLUSH_SEQUENCE[1] and
+            buff[buff_index - 2] == FLUSH_SEQUENCE[2] and
+            buff[buff_index - 1] == FLUSH_SEQUENCE[3]) { //This is the end of the sequence.
+#ifdef DEBUG
+            //            ps("sending "); p(buff_index); psl(" bytes.");
+#endif
+            send();
+            buff_index = 0;
+        }
+    }
 
-  client.poll();
-  yield();
+    client.poll();
+    yield();
 }

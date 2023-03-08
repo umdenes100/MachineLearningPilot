@@ -144,6 +144,9 @@ void send() {
       delay(1000);
       return; }
     case OP_SEND: {
+      char category[50];
+      strcpy(category, &buff[1]);
+     
       camera_fb_t * fb = esp_camera_fb_get();
 
       if (!fb) {
@@ -185,7 +188,7 @@ void send() {
       }
       esp_camera_fb_return(fb);
       doc.clear();
-      doc["category"] = "josh";
+      doc["category"] = category;
       doc["op"] = "image_capture";
       serializeJson(doc, buff);
       serializeJson(doc, Serial);
@@ -282,6 +285,7 @@ void onMessageCallback(WebsocketsMessage message) {
 #endif
   }
   else if (strcmp(doc["op"], "prediction") == 0) {
-    prediction = doc["prediction"];
+    int pred = doc["predicftion"];
+    arduinoSerial.write((byte *) &pred, 2);
   }
 }

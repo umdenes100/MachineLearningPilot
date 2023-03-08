@@ -60,7 +60,7 @@ class JetsonClient:
                 os.mkdir('./data/' + message['category'])
             i = 0
             while os.path.exists('./data/' + message['category'] + '/im' + str(i) + '.jpeg'):
-                i+=1
+                i += 1
             picture.save('./data/' + message['category'] + '/im' + str(i) + '.jpeg','JPEG')
             print('saved :)')
         

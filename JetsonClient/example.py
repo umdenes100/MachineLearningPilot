@@ -3,10 +3,9 @@ import torchvision
 from utils import preprocess
 import torch.nn.functional as F
 import JetsonWSClient
-import threading
 
 print('setup...')
-categories = ['greg', 'josh']
+categories = ['cat', 'dog', 'gorilla']
 device = torch.device('cuda')
 model = torchvision.models.resnet18(pretrained=True)
 model.fc = torch.nn.Linear(512, 2)
@@ -22,9 +21,5 @@ def handler(image):
     return categories[output.argmax()]
 
 
-client = JetsonWSClient.JetsonClient(handler, 'Team Bofa')
-
-#threading.Thread(target=client.ws.run_forever, name="WS Thread",daemon=True).start()
-
-print('Starting...')
+client = JetsonWSClient.JetsonClient(handler, 'Team Name')
 client.ws.run_forever()
