@@ -112,7 +112,7 @@ Docker should now be set up! Verify by connecting to the ip 192.168.55.1:8888 to
 ### Note: Juptyter password: dlinano
 
 ## For the Future:
-To connect to the Jupyter notebook from here on out, follow the steps but skip step 4. **YOU SHOULD NOT RUN CREATE.SH AGAIN**. Just ssh to the jetson@ip, run the ./doc_run_ script, and connect to the IP. **RUNNING THE CREATE SCRIPT AGAIN MAY OVERWRITE YOUR PROGRESS*
+To connect to the Jupyter notebook from here on out, follow the steps but skip step 4. **YOU SHOULD NOT RUN CREATE.SH AGAIN**. Just ssh to the jetson@ip, run the ./doc_run_ script, and connect to the IP. **RUNNING THE CREATE SCRIPT AGAIN MAY OVERWRITE YOUR PROGRESS**
 
 # Jetson Documentation
 
