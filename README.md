@@ -13,7 +13,7 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 
 ## Thumbs Activity: 
 
-### [Starting the Docker and Getting into Jupyter Notebook for Thumbs Activity](about:blank)
+### [Starting the Docker and Getting into Jupyter Notebook for Thumbs Activity](https://github.com/umdenes100/MachineLearningPilot#docker-startup-for-ml-lesson-2)
 
 ## Mission Stuff:
 
@@ -21,7 +21,7 @@ Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES
 ### [Jetson Documentation](https://github.com/umdenes100/MachineLearningPilot#jetson-documentation)
 ### [Use of Jetson Functions on Arduino](https://github.com/umdenes100/MachineLearningPilot#use-of-jetson-functions-on-arduino)
 
-## Setting up the Jetsons for ML Lesson 2 - Machine Learning Experience
+# Setting up the Jetsons for ML Lesson 2 - Machine Learning Experience
 
 ### Jetson Docker Setup - GUI:
 1. Turn on your Jetson and hook up to a monitor via HDMI. Also plug in a USB mouse and keyboard.
@@ -53,7 +53,11 @@ If there is a mounting error with the thumb drive you plug in:
 3. `lsblk` to check if it worked.
 4. Your directory is now ./media/usb
 
-## Docker Startup for ML Lesson 2
+# Setting up the Jetsons for the Mission
+
+### TODO
+
+# Docker Startup for ML Lesson 2
 
 ### The following verifiably works on Windows, process likely different for MacOS.
 ### Docker Startup - Over WiFi (Jetson MUST have WiFi chip for this):
