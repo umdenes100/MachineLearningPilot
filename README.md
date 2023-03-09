@@ -92,7 +92,7 @@ Docker should now be set up! Verify by connecting to the ip 192.168.55.1:8888 to
 
 ### Note: Juptyter password: dlinano
 
-## Jetson First Time Setup
+# Jetson First Time Setup
 
 1. Open command prompt
     1. Windows button + R
@@ -100,7 +100,7 @@ Docker should now be set up! Verify by connecting to the ip 192.168.55.1:8888 to
 2. Type `ssh jetson@\[ip address of Jetson\]` and press enter
     1. If prompted, type: yes 
 3. Type in password: jetson
-4.  Type `./create.sh` and press enter
+4. Type `./create.sh` and press enter
     1. Type your team name when prompted and press enter
     2. Type your mission type when prompted and press enter
     3. You're now ready to go!
@@ -111,7 +111,10 @@ Docker should now be set up! Verify by connecting to the ip 192.168.55.1:8888 to
 
 ### Note: Juptyter password: dlinano
 
-## Jetson Documentation
+## For the Future:
+To connect to the Jupyter notebook from here on out, follow the steps but skip step 4. **YOU SHOULD NOT RUN CREATE.SH AGAIN**. Just ssh to the jetson@ip, run the ./doc_run_ script, and connect to the IP. **RUNNING THE CREATE SCRIPT AGAIN MAY OVERWRITE YOUR PROGRESS*
+
+# Jetson Documentation
 
 ### Jetson Documentation - ML Pilot Spring 2023 - Writing the Image Processing and Communication Script
 
@@ -190,7 +193,7 @@ To run the script on the Jetson:
 3. Type: `python3 script_name.py` to run your script
 4. Your Jetson should now be able to send and receive messages!
 
-## Use of Jetson Functions on Arduino
+# Use of Jetson Functions on Arduino
 Now that your Jetson can make predictions and talk to the Ardunio, it's time for your Arduino to talk back.
 There are two functions in the Enes100 library. Those functions are described [here](https://enes100.umd.edu/libraries/enes100#ml_pred) on the Enes100.umd.edu website.
 For both of these functions to work, **you will need the script you wrote to be running**. Otherwise, your Jetson will not communicate.
