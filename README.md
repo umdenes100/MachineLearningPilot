@@ -2,20 +2,22 @@
 
 Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES 100.
 
-## Important Links:
+# Important Links:
 
-## For TFs: 
+# For TFs: 
 
 ### [Setting up the Jetsons for ML Lesson 2 - TF side](https://github.com/umdenes100/MachineLearningPilot#setting-up-the-jetsons-for-ml-lesson-2---machine-learning-experience)
 ### [Setting up the Jetsons for ML Mission - TF side](about:blank)
 
-## For Students and TFs: 
+# For Students and TFs: 
 
 ## Thumbs Activity: 
+
 ### [Starting the Docker and Getting into Jupyter Notebook for Thumbs Activity](about:blank)
 
 ## Mission Stuff:
-### [First time Startup - Jetson](about:blank)
+
+### [First time Startup - Jetson](https://github.com/umdenes100/MachineLearningPilot#jetson-first-time-setup)
 ### [Jetson Documentation](https://github.com/umdenes100/MachineLearningPilot#jetson-documentation)
 ### [Use of Jetson Functions on Arduino](https://github.com/umdenes100/MachineLearningPilot#use-of-jetson-functions-on-arduino)
 
