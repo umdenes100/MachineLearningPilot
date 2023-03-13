@@ -36,7 +36,7 @@ def preprocess(image):
 class JetsonClient:
     # See first line of this file if you want to edit this function
     def on_message(self, _, message):
-        #print(message)
+        print(message)
         message = json.loads(message)
         if message['op'] == 'prediction_request':
             losBytes = bytes.fromhex(message['image'])

@@ -38,7 +38,6 @@ void send() {
       doc["teamName"] = teamName;
       doc["teamType"] = teamType;
       arucoConfirmed = false;
-      needToSendMission = true; //Lets send the mission site immediately after reciept.
       break;
     case OP_BEGIN_NEW:
       doc["op"] = "begin";
@@ -70,11 +69,11 @@ void send() {
       break;
     case OP_LOCATION_NEW:
       sendAruco();
-      break;
+      return;
     case OP_MISSION:
       doc["op"] = "mission";
       doc["teamName"] = teamName;
-      doc["type"] = buff[1];
+      doc["type"] = (int) buff[1];
       i = 2;
       while (buff[i] != 0xFF and i < 200) { //Since ASCII cannot be 0xFF (0-128) we only need to check the first of the ending sequence.
         buff[i - 2] = buff[i]; //Move the message foward in the buffer.
@@ -96,105 +95,107 @@ void send() {
       doc["message"] = buff;
       break;
     case OP_PRED: {
-      camera_fb_t * fb = esp_camera_fb_get();
+        camera_fb_t * fb = esp_camera_fb_get();
 
-      if (!fb) {
-        Serial.println("Camera capture failed");
-        doc["op"] = "image_failure";
+        if (!fb) {
+          Serial.println("Camera capture failed");
+          doc["op"] = "image_failure";
+          serializeJson(doc, buff);
+          client.send(buff);
+          return;
+        }
+
+        Serial.println("Camera capture successful!");
+        Serial.println(fb->len);
+        doc["op"] = "image_reset";
         serializeJson(doc, buff);
+        serializeJson(doc, Serial);
         client.send(buff);
+
+        delay(1000);
+        size_t size = fb->len;
+        Serial.println(size);
+        unsigned packageSize = 2000;
+        char data[packageSize + 1]; // each pixel is 1 byte, should be 2 hex digits surely
+        for (size_t j = 0 ; j < size ; j += packageSize / 2) {
+          uint32_t s = millis();
+          for (size_t i = 0; i < packageSize / 2 && (i + j) < size; i++) { // soooo not cool :(
+            byte pixel = fb->buf[i + j]; // buffer pixel should be 1 byte surely
+            sprintf(data + (2 * i), "%02x", pixel);
+          }
+          doc.clear();
+          doc["op"] = "image_chunk";
+          //Serial.println(data);
+          doc["chunk"].set(data);
+          doc["index"] = j / (packageSize / 2);
+          serializeJson(doc, buff);
+          //serializeJson(doc, Serial);
+          Serial.println(millis() - s);
+          delay(100);
+          client.send(buff);
+        }
+        esp_camera_fb_return(fb);
+        doc.clear();
+        doc["op"] = "prediction_request";
+        serializeJson(doc, buff);
+        serializeJson(doc, Serial);
+        client.send(buff);
+        delay(1000);
         return;
       }
-
-      Serial.println("Camera capture successful!");
-      Serial.println(fb->len);
-      doc["op"] = "image_reset";
-      serializeJson(doc, buff);
-      serializeJson(doc, Serial);
-      client.send(buff);
-
-      delay(1000);
-      size_t size = fb->len;
-      Serial.println(size);
-      unsigned packageSize = 2000;
-      char data[packageSize + 1]; // each pixel is 1 byte, should be 2 hex digits surely
-      for (size_t j = 0 ; j < size ; j += packageSize / 2) {
-        uint32_t s = millis();
-        for (size_t i = 0; i < packageSize / 2 && (i + j) < size; i++) { // soooo not cool :(
-          byte pixel = fb->buf[i + j]; // buffer pixel should be 1 byte surely
-          sprintf(data + (2 * i), "%02x", pixel);
-        }
-        doc.clear();
-        doc["op"] = "image_chunk";
-        //Serial.println(data);
-        doc["chunk"].set(data);
-        doc["index"] = j / (packageSize / 2);
-        serializeJson(doc, buff);
-        //serializeJson(doc, Serial);
-        Serial.println(millis() - s);
-        delay(100);
-        client.send(buff);
-      }
-      esp_camera_fb_return(fb);
-      doc.clear();
-      doc["op"] = "prediction_request";
-      serializeJson(doc, buff);
-      serializeJson(doc, Serial);
-      client.send(buff);
-      delay(1000);
-      return; }
     case OP_SEND: {
-      char category[50];
-      strcpy(category, &buff[1]);
-     
-      camera_fb_t * fb = esp_camera_fb_get();
+        char category[50];
+        strcpy(category, &buff[1]);
 
-      if (!fb) {
-        Serial.println("Camera capture failed");
-        doc["op"] = "image_failure";
+        camera_fb_t * fb = esp_camera_fb_get();
+
+        if (!fb) {
+          Serial.println("Camera capture failed");
+          doc["op"] = "image_failure";
+          serializeJson(doc, buff);
+          client.send(buff);
+          return;
+        }
+
+        Serial.println("Camera capture successful!");
+        Serial.println(fb->len);
+        doc["op"] = "image_reset";
         serializeJson(doc, buff);
+        serializeJson(doc, Serial);
         client.send(buff);
+
+        delay(1000);
+        size_t size = fb->len;
+        Serial.println(size);
+        unsigned packageSize = 2000;
+        char data[packageSize + 1]; // each pixel is 1 byte, should be 2 hex digits surely
+        for (size_t j = 0 ; j < size ; j += packageSize / 2) {
+          uint32_t s = millis();
+          for (size_t i = 0; i < packageSize / 2 && (i + j) < size; i++) { // soooo not cool :(
+            byte pixel = fb->buf[i + j]; // buffer pixel should be 1 byte surely
+            sprintf(data + (2 * i), "%02x", pixel);
+          }
+          doc.clear();
+          doc["op"] = "image_chunk";
+          //Serial.println(data);
+          doc["chunk"].set(data);
+          doc["index"] = j / (packageSize / 2);
+          serializeJson(doc, buff);
+          //serializeJson(doc, Serial);
+          Serial.println(millis() - s);
+          delay(100);
+          client.send(buff);
+        }
+        esp_camera_fb_return(fb);
+        doc.clear();
+        doc["category"] = category;
+        doc["op"] = "image_capture";
+        serializeJson(doc, buff);
+        serializeJson(doc, Serial);
+        client.send(buff);
+        delay(1000);
         return;
       }
-
-      Serial.println("Camera capture successful!");
-      Serial.println(fb->len);
-      doc["op"] = "image_reset";
-      serializeJson(doc, buff);
-      serializeJson(doc, Serial);
-      client.send(buff);
-
-      delay(1000);
-      size_t size = fb->len;
-      Serial.println(size);
-      unsigned packageSize = 2000;
-      char data[packageSize + 1]; // each pixel is 1 byte, should be 2 hex digits surely
-      for (size_t j = 0 ; j < size ; j += packageSize / 2) {
-        uint32_t s = millis();
-        for (size_t i = 0; i < packageSize / 2 && (i + j) < size; i++) { // soooo not cool :(
-          byte pixel = fb->buf[i + j]; // buffer pixel should be 1 byte surely
-          sprintf(data + (2 * i), "%02x", pixel);
-        }
-        doc.clear();
-        doc["op"] = "image_chunk";
-        //Serial.println(data);
-        doc["chunk"].set(data);
-        doc["index"] = j / (packageSize / 2);
-        serializeJson(doc, buff);
-        //serializeJson(doc, Serial);
-        Serial.println(millis() - s);
-        delay(100);
-        client.send(buff);
-      }
-      esp_camera_fb_return(fb);
-      doc.clear();
-      doc["category"] = category;
-      doc["op"] = "image_capture";
-      serializeJson(doc, buff);
-      serializeJson(doc, Serial);
-      client.send(buff);
-      delay(1000);
-      return; }
   }
   //        Ok, now we need to send this baddy out on the websocket.
   serializeJson(doc, buff);
@@ -254,29 +255,28 @@ void onMessageCallback(WebsocketsMessage message) {
     aruco_x = doc["aruco"]["x"];
     aruco_y = doc["aruco"]["y"];
     aruco_theta = doc["aruco"]["theta"];
+    newData = true;
   }
   else if (strcmp(doc["op"], "info") == 0) {
-    if (needToSendMission) {
-      const float x = 0.55, theta = 0;
-      float y;
-      if (strcmp(doc["mission_loc"], "bottom") == 0) //mission location is on bottom
-        y = 0.55;
-      else
-        y = 1.45;
-      float_converter_t f;
-      arduinoSerial.write(0x05);
-      arduinoSerial.flush();
-      f.f = x;
-      arduinoSerial.write(f.b, 4);
-      arduinoSerial.flush();
-      f.f = y;
-      arduinoSerial.write(f.b, 4);
-      arduinoSerial.flush();
-      f.f = theta;
-      arduinoSerial.write(f.b, 4);
-      arduinoSerial.flush();
-      needToSendMission = false;
-    }
+    const float x = 0.55, theta = 0;
+    float y;
+    if (strcmp(doc["mission_loc"], "bottom") == 0) //mission location is on bottom
+      y = 0.55;
+    else
+      y = 1.45;
+    float_converter_t f;
+    arduinoSerial.write(0x05);
+    arduinoSerial.flush();
+    f.f = 0.55; //x
+    arduinoSerial.write(f.b, 4);
+    arduinoSerial.flush();
+    f.f = strcmp(doc["mission_loc"], "bottom") == 0 ? 0.55 : 1.45; //y
+    arduinoSerial.write(f.b, 4);
+    arduinoSerial.flush();
+    f.f = 0; //theta
+    arduinoSerial.write(f.b, 4);
+    arduinoSerial.flush();
+    needToSendMission = false;
   }
   else if (strcmp(doc["op"], "aruco_confirm") == 0) {
     arucoConfirmed = true;
