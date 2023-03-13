@@ -199,6 +199,7 @@ void send() {
   }
   //        Ok, now we need to send this baddy out on the websocket.
   serializeJson(doc, buff);
+  serializeJson(doc, Serial);
   client.send(buff);
 }
 

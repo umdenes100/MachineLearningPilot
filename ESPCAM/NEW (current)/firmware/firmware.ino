@@ -7,9 +7,9 @@
 #include <WiFi.h>
 #include "helpers.h"
 //With DEBUG enabled, it will print out debug messages to the Serial port.
-//#define DEBUG
+#define DEBUG
 //With USE_SWSR_AS_ARD enabled, it will do the Arduino stuff over a software serial part on D3 and D4. Useful to free up the Serial port for debug messages.
-//#define USE_SWSR_AS_ARD
+#define USE_SWSR_AS_ARD
 
 #define CAMERA_MODEL_AI_THINKER
 #include "esp_camera.h"
@@ -22,8 +22,7 @@
 
 
 #ifdef USE_SWSR_AS_ARD
-#include "SoftwareSerial.h"
-SoftwareSerial arduinoSerial;
+#define arduinoSerial Serial2
 #else
 #define arduinoSerial Serial
 #endif
@@ -139,7 +138,7 @@ void setup() {
 #endif
   //Set up the serial port.
 #ifdef USE_SWSR_AS_ARD
-  arduinoSerial.begin(9600, SWSERIAL_8N1, D3, D4, false);
+  arduinoSerial.begin(9600, SERIAL_8N1, 12, 13);
 #ifdef DEBUG
   if (!arduinoSerial) { // If the object did not initialize, then its configuration is invalid
     psl("Invalid SoftwareSerial pin configuration, check config");
@@ -209,7 +208,7 @@ void loop() {
       buff[buff_index - 2] == FLUSH_SEQUENCE[2] and
       buff[buff_index - 1] == FLUSH_SEQUENCE[3]) { //This is the end of the sequence.
 #ifdef DEBUG
-      //            ps("sending "); p(buff_index); psl(" bytes.");
+      ps("sending "); p(buff_index); psl(" bytes.");
 #endif
       send();
       buff_index = 0;
