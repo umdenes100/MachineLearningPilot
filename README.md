@@ -1,17 +1,18 @@
 # Jetson First Time Setup
 
 1. Open command prompt
-    1. Windows button + R
-    2. Type `cmd` and press enter
+    1. On Windows, Windows button + R, type `cmd` and press enter
+    2. On Mac, search `Terminal` in spotlight then open.
 2. Type `ssh jetson@\[ip address of Jetson\]` and press enter
-    1. If prompted, type: yes 
-3. Type in password: jetson
+    1. If prompted, type: `yes` and press enter
+3. Type in password: `jetson`
 4. Type `./create.sh` and press enter
     1. Type your team name when prompted and press enter
     2. Type your mission type when prompted and press enter
     3. You're now ready to go!
 5. Type `./doc_run_[teamname]-[mission].sh` and press enter
     1. CLI tip: pressing tab will auto complete when it is a unique file name. So, after you type `./doc_run_[first few letters]` it will likely auto complete with a tab.
+    2. If prompted, type password: `jetson`
 6. Now, Jupyter notebook should be started at the given ip.
 7. Connect to the `[ip]:8888` on your web browser to see if the Jupyter notebook is up and running!
 
@@ -104,10 +105,11 @@ Now that your Jetson can make predictions and talk to the Ardunio, it's time for
 There are two functions in the Enes100 library. Those functions are described [here](https://enes100.umd.edu/libraries/enes100#ml_pred) on the Enes100.umd.edu website.
 For both of these functions to work, **you will need the script you wrote to be running**. Otherwise, your Jetson will not communicate.
 The `MLGetPrediction()` function will take a pic, send it to the Jetson, make use of your handler function, and return the category index to your Ardunio.
-The `MLCaptureTrainingImage(String label)` function will take a pic, send it to the Jetson, and store it in a folder with the name `label`. The folders will be in the "Mission" folder on the Jetson.
+The `MLCaptureTrainingImage(const char *label)` function will take a pic, send it to the Jetson, and store it in a folder with the name `label`. The folders will be in the "Mission" folder on the Jetson.
+    1. A string literal (i.e. "cat", "dog") will satisfy the `const char *` parameter requirement. **The String object in Arduino will NOT satisfy this parameter. do NOT create a String object and try to pass to this function. Just use a literal or create a pointer.**
 
 ### Recommendations for Data Collection:
-1. Create an Ardunio file just contains a single `MLCaptureTrainingImage()` call, followed by a `while(1);` in the `loop()`. This will send 1 image to the Jetson, then stop. To take another image, just press the reset button on your Arduino. Have someone else check on the Jetson that the image successfully saved.
+1. Create an Ardunio file just contains a single `MLCaptureTrainingImage(label)` call, followed by a `while(1);` in the `loop()`. This will send 1 image to the Jetson, then stop. To take another image, just press the reset button on your Arduino. Have someone else check on the Jetson that the image successfully saved.
 2. Save your work by downloading any files you modify from Jupyter Notebook to your personal device. You never know what can happen.
 3. For the Data Collection module, skip the part where you collect data yourself. If your folder names match your category names, the data should be ready to train when you finish running all cells.
 4. Test your model by saving the model as a .pth, and putting the path of the model file in the communications script you will write.
@@ -116,7 +118,7 @@ The `MLCaptureTrainingImage(String label)` function will take a pic, send it to 
 # Debugging
 
 Coming soon!
-See your UTF or lTF Josh for debugging for now.
+For now, see your UTF or lTF Josh for debugging.
 Or, shoot an email to jstone14@terpmail.umd.edu
 
 # To Recap:
@@ -132,10 +134,27 @@ Here is the process of getting started:
 
 How you choose to collect data is up to you. There are 4 choose 2 = 6 permutations for the ML mission site's plantable layout. But also, we have provided arucos that will allow you to do image manipulations (to possibly make more than 1 prediction per image if you change the handler function). There is not a correct answer, and that is the beauty of this course and pilot.
 
+# FAQ
+
+**Q**: No one on my team knows Python. Are we doomed?
+**A**: No! Python is not hard to pick up, and frankly you don't really need to "learn" Python to create a working script. That being said, it is still a good skill to have, so consider learning if you have a light semester with much free time :).
+
+**Q**: How do the cameras work and how will they be when we recieve them?
+**A**: You will recieve the cameras in a case. There are two kinds of cases, one with a vertical, and other with horizontal, mounting. These cameras have WiFi capabilities, and use that to send images to the Jetson.
+
+**Q**: How do we use the Aruco markers on the Mission site?
+**A**: Use the opencv library! It is already installed on the Jetson, so if you `import cv2` in your handler script, you will be able to use the opencv library to read aruco markers. Use this and image array manipulations to crop, rotate, etc. to your image.
+
+**Q**: How does the Machine Learning actually work?
+**A**: The Jetson uses the RESNET18 neural network to train your model using the data you collect. This neural network comes with 18 layers, many layers already trained. The Jetson is a machine learning ... machine and is built for image processing with ML. [See this video](https://www.youtube.com/watch?v=aircAruvnKk) to learn more about how neural networks work.
+
+**Q**: Help!!!!!!
+**A**: Ask your TF, or LTF Josh for assistance with any other thing. Or, email jstone14@terpmail.umd.edu.
+
 # Final Notices:
 
 Feedback is critical to making sure everything goes well.
-If you have any feedback or suggestions, shoot it to a TF or jstone14@terpmail.umd.edu
+If you have any feedback or suggestions, shoot it to a TF or jstone14@terpmail.umd.edu.
 
 Here is a chat GPT generated good luck message:
     Dear Students of ENES100,
