@@ -13,7 +13,7 @@
 5. Type `./doc_run_[teamname]-[mission].sh` and press enter
     1. CLI tip: pressing tab will auto complete when it is a unique file name. So, after you type `./doc_run_[first few letters]` it will likely auto complete with a tab.
 6. Now, Jupyter notebook should be started at the given ip.
-7. Connecting to the `[ip]:8888` to see if the Jupyter notebook is up and running!
+7. Connect to the `[ip]:8888` on your web browser to see if the Jupyter notebook is up and running!
 
 ### Note: Juptyter password: dlinano
 
@@ -113,6 +113,12 @@ The `MLCaptureTrainingImage(String label)` function will take a pic, send it to 
 4. Test your model by saving the model as a .pth, and putting the path of the model file in the communications script you will write.
     1. To get the path, right click on the model and select copy path.
     
+# Debugging
+
+Coming soon!
+See your UTF or lTF Josh for debugging for now.
+Or, shoot an email to jstone14@terpmail.umd.edu
+
 # To Recap:
 Here is the process of getting started:
 1. Connect to the Jetson and run the ./create.sh command to set up your workspace for the rest of the semester.
@@ -125,6 +131,11 @@ Here is the process of getting started:
 8. : )))))
 
 How you choose to collect data is up to you. There are 4 choose 2 = 6 permutations for the ML mission site's plantable layout. But also, we have provided arucos that will allow you to do image manipulations (to possibly make more than 1 prediction per image if you change the handler function). There is not a correct answer, and that is the beauty of this course and pilot.
+
+# Final Notices:
+
+Feedback is critical to making sure everything goes well.
+If you have any feedback or suggestions, shoot it to a TF or jstone14@terpmail.umd.edu
 
 Here is a chat GPT generated good luck message:
     Dear Students of ENES100,
