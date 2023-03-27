@@ -1,3 +1,23 @@
+# UPDATES AND NOTES
+The final ESPCAMs are close to done, but not fully fledged out yet.
+In the meantime, we have provided ESPCAMS that stream the current images to your webbrowser!
+1. Connect to the vision system wifi 
+2. Connect to the IP on the cam `http://192.168.X.XX` via web browser. **MAKE SURE YOU ARE CONNECTED TO VISION SYSTEM WIFI**.
+3. Note: You will only need to power the cam (5 or 3.3 v, gnd) (5v is the top right pin when looking at back of cam, gnd is pin below that). You **DO NOT** need tx and rx for this.
+4. Scroll to the bottom and select get still to capture an image.
+![image](https://user-images.githubusercontent.com/99224714/228018845-726b1242-0a19-457f-a678-247fbb817699.png)
+5. You can also select start stream to start a live stream, but you will not be able to save an image (use this to get an idea for perspective / POV).
+6. Right click and select save image as (Windows).
+![image](https://user-images.githubusercontent.com/99224714/228018728-05457fe4-71b3-49cb-832b-98a6a91ae99d.png)
+
+
+# System Overview
+![image](https://user-images.githubusercontent.com/99224714/228002077-e242777d-0461-481b-b563-879b6cb3a2f5.png)
+
+![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
+
+![image](https://user-images.githubusercontent.com/99224714/228005203-68b00682-c203-4fe3-b943-4a3d8b432d96.png)
+
 # Jetson First Time Setup
 
 1. Open command prompt
