@@ -9,6 +9,7 @@ In the meantime, we have provided ESPCAMS that stream the current images to your
 5. You can also select start stream to start a live stream, but you will not be able to save an image (use this to get an idea for perspective / POV).
 6. Right click and select save image as (Windows).
 ![image](https://user-images.githubusercontent.com/99224714/228018728-05457fe4-71b3-49cb-832b-98a6a91ae99d.png)
+7. You can upload to Jetson later via the Jupyter Notebook!
 
 
 # System Overview
