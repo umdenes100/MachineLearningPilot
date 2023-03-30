@@ -17,8 +17,6 @@ In the meantime, we have provided ESPCAMS that stream the current images to your
 
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
-![image](https://user-images.githubusercontent.com/99224714/228005203-68b00682-c203-4fe3-b943-4a3d8b432d96.png)
-
 # Jetson First Time Setup
 
 1. Open command prompt
@@ -135,6 +133,17 @@ The `MLCaptureTrainingImage(const char *label)` function will take a pic, send i
 3. For the Data Collection module, skip the part where you collect data yourself. If your folder names match your category names, the data should be ready to train when you finish running all cells.
 4. Test your model by saving the model as a .pth, and putting the path of the model file in the communications script you will write.
     1. To get the path, right click on the model and select copy path.
+    
+# Training
+
+In the training notebook, change the categories to match with the folders containing the data. Also, make sure to change the path to where you have the folder in the ImageClassificationDataset object.
+1. I.e: ```datasets[name] = ImageClassificationDataset('./path/of/folders/, CATEGORIES, TRANSFORMS)```
+
+You can also utilize multiple datasets if you want to have different iterations on how you collect and train data.
+1. Create folders with the names of your datasets and make sure the array matches
+2. Add the name to the path in the object 
+3. I.e: ```datasets[name] = ImageClassificationDataset('./' + name + '/path/of/folders/, CATEGORIES, TRANSFORMS)```
+
     
 # Debugging
 
