@@ -17,6 +17,8 @@ In the meantime, we have provided ESPCAMS that stream the current images to your
 
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
+COMING SOON: CAMERA WIRING DIAGRAM
+
 # Jetson First Time Setup
 
 1. Open command prompt
