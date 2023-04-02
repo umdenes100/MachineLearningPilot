@@ -1,4 +1,8 @@
 # UPDATES AND NOTES
+
+# **NOTICE!!!!!!**
+**YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER!** Otherwise, the images **WILL NOT SAVE**.
+
 The final ESPCAMs are close to done, but not fully fledged out yet.
 In the meantime, we have provided ESPCAMS that stream the current images to your webbrowser!
 1. Connect to the vision system wifi 
