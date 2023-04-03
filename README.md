@@ -23,6 +23,8 @@
 
 ![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
 
+The ESPCAM models are located here: https://www.printables.com/model/280978-esp32-cam-case
+
 # Jetson First Time Setup
 
 1. Open command prompt
