@@ -21,7 +21,7 @@ In the meantime, we have provided ESPCAMS that stream the current images to your
 
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
-COMING SOON: CAMERA WIRING DIAGRAM
+![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
 
 # Jetson First Time Setup
 
