@@ -3,8 +3,8 @@
 # **NOTICE!!!!!!**
 **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER!** Otherwise, the images **WILL NOT SAVE**.
 
-The final ESPCAMs are close to done, but not fully fledged out yet.
-In the meantime, we have provided ESPCAMS that stream the current images to your webbrowser!
+## Training Camera Instructions
+
 1. Connect to the vision system wifi 
 2. Connect to the IP on the cam `http://192.168.X.XX` via web browser. **MAKE SURE YOU ARE CONNECTED TO VISION SYSTEM WIFI**.
 3. Note: You will only need to power the cam (5 or 3.3 v, gnd) (5v is the top right pin when looking at back of cam, gnd is pin below that). You **DO NOT** need tx and rx for this.
