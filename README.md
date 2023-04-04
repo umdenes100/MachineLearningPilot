@@ -1,7 +1,10 @@
 # UPDATES AND NOTES
 
-# **NOTICE!!!!!!**
-**YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER!** Otherwise, the images **WILL NOT SAVE**.
+# **NOTICES!!!!!!**
+
+1. **YOU NEED TO UPDATE YOUR ENES100 LIBRARY TO THE ML EDITION**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
+
+2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER!** Otherwise, the images **WILL NOT SAVE**.
 
 ## Training Camera Instructions
 
