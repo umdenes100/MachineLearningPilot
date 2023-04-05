@@ -43,6 +43,7 @@ The ESPCAM models are located here: https://www.printables.com/model/280978-esp3
 5. Type `./doc_run_[teamname]-[mission].sh` and press enter
     1. CLI tip: pressing tab will auto complete when it is a unique file name. So, after you type `./doc_run_[first few letters]` it will likely auto complete with a tab.
     2. If prompted, type password: `jetson`
+    3. If it gives an error, make sure the USB webcam is plugged into the Jetson Nano.
 6. Now, Jupyter notebook should be started at the given ip.
 7. Connect to the `[ip]:8888` on your web browser to see if the Jupyter notebook is up and running!
 
