@@ -57,7 +57,7 @@ class JetsonClient:
             #image_str = PIL.Image.frombytes(data=image_str,mode='RGB',size=(224,224),decoder_name='jpeg')
             picture = PIL.Image.open(image_str)
             if not os.path.isdir('./data/' + message['category']):
-                os.mkdir('./data/' + message['category'])
+                os.makedirs('./data/' + message['category'])
             i = 0
             while os.path.exists('./data/' + message['category'] + '/im' + str(i) + '.jpeg'):
                 i += 1

@@ -144,14 +144,19 @@ void send() {
         return;
       }
     case OP_SEND: {
+         
         char category[50];
+        for(int i = 0; i < 50; i++) {
+          Serial.print(buff[i], HEX);
+        }
         strcpy(category, &buff[1]);
+        Serial.println(category);
 
         camera_fb_t * fb = esp_camera_fb_get();
 
         if (!fb) {
           Serial.println("Camera capture failed");
-          doc["op"] = "image_failure";
+          doc["op"] = "image_failure";  
           serializeJson(doc, buff);
           client.send(buff);
           return;

@@ -29,7 +29,7 @@
 
 
 // WiFi network name
-#define ROOM 1116
+#define ROOM 1215
 #if ROOM == 1116  //big lab
 #define WIFI_NETWORK "VisionSystem1116-2.4"
 #elif ROOM == 1215 //small Lab
@@ -138,7 +138,7 @@ void setup() {
 #endif
   //Set up the serial port.
 #ifdef USE_SWSR_AS_ARD
-  arduinoSerial.begin(9600, SERIAL_8N1, 12, 13);
+  arduinoSerial.begin(115200, SERIAL_8N1, 2, 4);
 #ifdef DEBUG
   if (!arduinoSerial) { // If the object did not initialize, then its configuration is invalid
     psl("Invalid SoftwareSerial pin configuration, check config");
@@ -195,6 +195,7 @@ void setup() {
 void loop() {
   //Read in data from Arduino
   if (arduinoSerial.available()) {
+//    Serial.print((int)arduinoSerial.peek());
     buff[buff_index++] = arduinoSerial.read();
     if (buff_index == 500) { //Buffer overflow. It is very unlikely this will occur. It could only occur with a print so we will just cut it off.
       buff[496] = FLUSH_SEQUENCE[0];
@@ -237,7 +238,8 @@ void loop() {
       }
     }
     if (buff[0] == 0x99) { //Ping
-      Serial.write(0x99);
+      arduinoSerial.write(0x99);
+      psl("Started");
       buff_index = 0;
     }
   }
