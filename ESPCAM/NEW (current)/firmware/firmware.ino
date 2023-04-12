@@ -223,9 +223,9 @@ void loop() {
         newData = false;
         if (aruco_visible) {
           arduinoSerial.write(0x02);
-          arduinoSerial.write(uint8_t(max(aruco_x * 100, 0.0)));
-          uint16_t y = max(aruco_y * 100, 0.0);
-          arduinoSerial.write((byte *) &y, 2);
+          uint16_t x = max(aruco_x * 100, 0.0);
+          arduinoSerial.write((byte *) &x, 2);
+          arduinoSerial.write(uint8_t(max(aruco_y * 100, 0.0)));
           int16_t t = aruco_theta * 100;
           arduinoSerial.write((byte *) &t, 2);
           arduinoSerial.flush();
