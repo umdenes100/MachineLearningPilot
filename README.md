@@ -4,7 +4,8 @@
 
 [Updates and Notes - General Announcements](https://umdenes100.github.io/MachineLearningPilot/#updates-and-notes)   
 [System Overview - How the ML Prediction System works and what you will do](https://umdenes100.github.io/MachineLearningPilot/#system-overview)   
-[WiFi Camera Info - Info on the ML WiFi cameras and the training Cameras](https://umdenes100.github.io/MachineLearningPilot/#camera-info)   
+[WiFi Camera Info - Info on the ML WiFi cameras and the training Cameras](https://umdenes100.github.io/MachineLearningPilot/#wifi-camera-info)   
+[New Library Documentation for ML teams](https://umdenes100.github.io/MachineLearningPilot/#new-library)
 [Jetson First Time Setup](https://umdenes100.github.io/MachineLearningPilot/#jetson-first-time-setup)   
 [Main Jetson Documentation - info on how to write script, collect data, etc.](https://umdenes100.github.io/MachineLearningPilot/#jetson-documentation)   
 [Jetson Functions on Arduino](https://umdenes100.github.io/MachineLearningPilot/#use-of-jetson-functions-on-arduino)   
@@ -61,7 +62,14 @@ There is not enough power to the camera, try making sure your wiring checks out 
 The camera is having issues. Try restarting the ESP using the reset button on the board (use a thin object).
 
 ### Other
-Ask LTF Josh or Forrest, or email jstone14@terpmail.umd.edu and use a different camera.
+Ask LTF Josh or LTF Forrest, or email jstone14@terpmail.umd.edu and use a different camera.
+
+# New Library
+The new library introduces some changes:
+1. Instead of location.x, location.y, location.theta, you will instead use Enes100.getX(), Enes100.getY(), and Enes100.getTheta() to get the coordinate values.
+2. To report the coordinate for your mission, you will need to create a Coordinate object to send to the Enes100.mission() function. The example code in the new library shows how to do this, and it is shown below.
+
+![image](https://user-images.githubusercontent.com/99224714/231557337-55991f53-6b0b-4ba2-b26d-0c44dc4bf408.png)
 
 # Jetson First Time Setup
 
