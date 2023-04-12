@@ -1,6 +1,20 @@
+# Spring 2023 Jetson Documentation
+
+# Menu
+
+[Updates and Notes - General Announcements](https://umdenes100.github.io/MachineLearningPilot/#updates-and-notes)   
+[System Overview - How the ML Prediction System works and what you will do](https://umdenes100.github.io/MachineLearningPilot/#system-overview)   
+[WiFi Camera Info - Info on the ML WiFi cameras and the training Cameras](https://umdenes100.github.io/MachineLearningPilot/#camera-info)   
+[Jetson First Time Setup](https://umdenes100.github.io/MachineLearningPilot/#jetson-first-time-setup)   
+[Main Jetson Documentation - info on how to write script, collect data, etc.](https://umdenes100.github.io/MachineLearningPilot/#jetson-documentation)   
+[Jetson Functions on Arduino](https://umdenes100.github.io/MachineLearningPilot/#use-of-jetson-functions-on-arduino)   
+[Training, Debugging, FAQ, Recap](https://umdenes100.github.io/MachineLearningPilot/#training)   
+
+
+
 # UPDATES AND NOTES
 
-# **NOTICES!!!!!!**
+## **NOTICES!!!!!!**
 
 1. **YOU NEED TO UPDATE YOUR ENES100 LIBRARY TO THE ML EDITION**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
 
@@ -11,11 +25,11 @@
 
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
-![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
-
 The ESPCAM models are located here: https://www.printables.com/model/280978-esp32-cam-case
 
-# Camera Info
+# WiFi Camera Info
+
+![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
 
 ## Training Camera Instructions
 
