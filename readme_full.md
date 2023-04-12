@@ -1,3 +1,5 @@
+# OLD - Refer to current README for student info.
+
 # MachineLearningPilot
 
 Code used on the Jetson Nanos for the T&L Grant Machine Learning portion of ENES 100.

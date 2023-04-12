@@ -1,3 +1,4 @@
+# OLD - Refer to current README for student info.
 # Jetson First Time Setup
 
 1. Open command prompt
