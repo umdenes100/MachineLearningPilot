@@ -5,7 +5,7 @@
 [Updates and Notes - General Announcements](https://umdenes100.github.io/MachineLearningPilot/#updates-and-notes)   
 [System Overview - How the ML Prediction System works and what you will do](https://umdenes100.github.io/MachineLearningPilot/#system-overview)   
 [WiFi Camera Info - Info on the ML WiFi cameras and the training Cameras](https://umdenes100.github.io/MachineLearningPilot/#wifi-camera-info)   
-[New Library Documentation for ML teams](https://umdenes100.github.io/MachineLearningPilot/#new-library)
+[New Library Documentation for ML teams](https://umdenes100.github.io/MachineLearningPilot/#new-library)   
 [Jetson First Time Setup](https://umdenes100.github.io/MachineLearningPilot/#jetson-first-time-setup)   
 [Main Jetson Documentation - info on how to write script, collect data, etc.](https://umdenes100.github.io/MachineLearningPilot/#jetson-documentation)   
 [Jetson Functions on Arduino](https://umdenes100.github.io/MachineLearningPilot/#use-of-jetson-functions-on-arduino)   
