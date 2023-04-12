@@ -9,7 +9,8 @@
 [Jetson First Time Setup](https://umdenes100.github.io/MachineLearningPilot/#jetson-first-time-setup)   
 [Main Jetson Documentation - info on how to write script, collect data, etc.](https://umdenes100.github.io/MachineLearningPilot/#jetson-documentation)   
 [Jetson Functions on Arduino](https://umdenes100.github.io/MachineLearningPilot/#use-of-jetson-functions-on-arduino)   
-[Training, Debugging, FAQ, Recap](https://umdenes100.github.io/MachineLearningPilot/#training)   
+[Training](https://umdenes100.github.io/MachineLearningPilot/#training)    
+[Debugging, FAQ, Recap](https://umdenes100.github.io/MachineLearningPilot/#debugging)    
 
 
 
@@ -26,16 +27,16 @@
 
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
-The ESPCAM models are located here: https://www.printables.com/model/280978-esp32-cam-case
-
 # WiFi Camera Info
 
 ![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
 
+The ESPCAM case models are located [here](https://www.printables.com/model/280978-esp32-cam-case)
+
 ## Training Camera Instructions
 
-1. Connect to the vision system wifi 
-2. Connect to the IP on the cam `http://192.168.X.XX` via web browser. **MAKE SURE YOU ARE CONNECTED TO VISION SYSTEM WIFI**.
+1. Connect to the vision system wifi   
+2. Connect to the IP on the cam `http://192.168.X.XX` via web browser. **MAKE SURE YOU ARE CONNECTED TO VISION SYSTEM WIFI**.  
 3. Note: You will only need to power the cam (5 or 3.3 v, gnd) (5v is the top right pin when looking at back of cam, gnd is pin below that). You **DO NOT** need tx and rx for this.
 4. Scroll to the bottom and select get still to capture an image.
 ![image](https://user-images.githubusercontent.com/99224714/228018845-726b1242-0a19-457f-a678-247fbb817699.png)
