@@ -4,7 +4,18 @@
 
 1. **YOU NEED TO UPDATE YOUR ENES100 LIBRARY TO THE ML EDITION**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
 
-2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER!** Otherwise, the images **WILL NOT SAVE**.
+2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER** if you plan to use the training image library function. Otherwise, the images **WILL NOT SAVE**.
+
+# System Overview
+![image](https://user-images.githubusercontent.com/99224714/228002077-e242777d-0461-481b-b563-879b6cb3a2f5.png)
+
+![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
+
+![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
+
+The ESPCAM models are located here: https://www.printables.com/model/280978-esp32-cam-case
+
+# Camera Info
 
 ## Training Camera Instructions
 
@@ -17,22 +28,33 @@
 6. Right click and select save image as (Windows).
 7. You can upload to Jetson later via the Jupyter Notebook!
 
+## Debugging Messages
+If your camera does not seem to work, even after checking all wiring is correct and switiching TX and RX pins, you can check the debugger to see what is going on.
+Go to the WiFi Camera case and get the USB to TTL converter (it's a small red thing with 5 prongs coming out one side and a USB adapter on the other). We will use this to recieve the debugging messages from the camera.
+1. Install PuTTY if you do not already have it.
+2. Wire according to this diagram.
+![229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49](https://user-images.githubusercontent.com/99224714/231495148-925346da-91f9-4921-95c3-ebe679d73a36.png)
+3. Plug USB side into laptop.
+4. Check device manager to find the COM port.
+![Screenshot 2023-04-12 104900](https://user-images.githubusercontent.com/99224714/231495623-f91c9528-1621-4de8-8ae6-ad1506133aa2.jpg)
+5. Open PuTTY, switch to SERIAL setting, and type in the COM number and 115200 for speed. Click Open.
+6. You should now be seeing debugging messages.
 
-# System Overview
-![image](https://user-images.githubusercontent.com/99224714/228002077-e242777d-0461-481b-b563-879b6cb3a2f5.png)
+### Brownout Detected
+There is not enough power to the camera, try making sure your wiring checks out and is not loose.
 
-![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
+### Camera init failed
+The camera is having issues. Try restarting the ESP using the reset button on the board (use a thin object).
 
-![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
-
-The ESPCAM models are located here: https://www.printables.com/model/280978-esp32-cam-case
+### Other
+Ask LTF Josh or Forrest, or email jstone14@terpmail.umd.edu and use a different camera.
 
 # Jetson First Time Setup
 
 1. Open command prompt
     1. On Windows, Windows button + R, type `cmd` and press enter
     2. On Mac, search `Terminal` in spotlight then open.
-2. Type `ssh jetson@\[ip address of Jetson\]` and press enter
+2. Type `ssh jetson@[ip address of Jetson]` and press enter
     1. If prompted, type: `yes` and press enter
 3. Type in password: `jetson`
 4. Type `./create.sh` and press enter
