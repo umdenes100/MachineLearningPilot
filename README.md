@@ -18,9 +18,9 @@
 
 ## **NOTICES!!!!!!**
 
-1. **YOU NEED TO UPDATE YOUR ENES100 LIBRARY TO THE ML EDITION**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
+1. **UPDATE LIBRARY FOR BUG FIXES IF YOU DOWNLOADED ML LIBRARY UPDATE BEFORE 4/14**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
 
-2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER** if you plan to use the training image library function. Otherwise, the images **WILL NOT SAVE**.
+2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER** if you plan to use the training image library function. Otherwise, the images **WILL NOT SAVE**. If you are using the training cameras, this does not affect you.
 
 # System Overview
 ![image](https://user-images.githubusercontent.com/99224714/228002077-e242777d-0461-481b-b563-879b6cb3a2f5.png)
@@ -28,6 +28,8 @@
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
 # WiFi Camera Info
+
+![image](https://user-images.githubusercontent.com/99224714/232099480-b2367cb3-0fef-46ce-8131-8f56e96ed30e.png)
 
 ![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
 
@@ -173,6 +175,7 @@ To run the script on the Jetson:
 2. Make sure you are in the same directory as your script. If not, use the `cd` command to enter into it
     1. Example: cd Your/Directory/Location/
 3. Type: `python3 script_name.py` to run your script
+![image](https://user-images.githubusercontent.com/99224714/232099576-42766621-1175-4c72-91cf-ff0c5c854db9.png)
 4. Your Jetson should now be able to send and receive messages!
 
 # Use of Jetson Functions on Arduino
