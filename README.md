@@ -18,6 +18,8 @@
 
 ## **NOTICES!!!!!!**
 
+**YOU MUST POWER THE BUFFER WITH 5V AND GROUND FOR EVERYTHING TO WORK**   
+
 1. **UPDATE LIBRARY FOR BUG FIXES IF YOU DOWNLOADED ML LIBRARY UPDATE BEFORE 4/14**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
 
 2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER** if you plan to use the training image library function. Otherwise, the images **WILL NOT SAVE**. If you are using the training cameras, this does not affect you.
