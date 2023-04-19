@@ -127,7 +127,7 @@ To define our device using CUDA, we run:
 `device = torch.device('cuda')`
 
 We will be using resnet18, a neural network with 18 layers, many of which have been pre-trained specifically for image processing.
-To use resnet18, we define our model as: 
+**IF YOU WISH TO TEST ANOTHER PRETRAINED MODEL, SEE [THIS SECTION](https://umdenes100.github.io/MachineLearningPilot/#other-models)** To use resnet18, we define our model as: 
 
 `model = torchvision.models.resnet18(pretrained=True)`
 
@@ -162,6 +162,44 @@ The first line inputs the image pixels into the model, and receives an output. T
 You must also `return output.argmax()` to get the index to the communication system.
 
 Because it gives the index, **it is crucial that you define the same category array/enums/#DEFINEs/etc. on your Arduino as you did when you created the model**.
+
+However, **you cant send whatever you want**, as long as it's an integer. One thing you could do is send the probability for each category. The following code gets and prints the probability for each.   
+
+    for i, score in enumerate(list(output)):
+        print(str(i) + " " + str(score))   
+        
+You could format a string of integers and wrap it with the int() constructor. To make sure they are all integers, use rounding and multiplying by factors of 10 to convert your decimal probabilities into integers.   
+    
+    results = ""
+    for i, score in enumerate(list(output)):
+        results = results + str(i) + str((round(score,2)*100))
+    return int(results)
+        
+The results of this may look something like `0544414556`, which could be interpreted as 0 (category 1): 54.44% chance | 1 (category 2): 45.56% chance.
+Note: **This code is untested and I just made it up right now, so don't just copy and paste expecting it to fully work.**
+
+**These are just two options of many. Do whatever works for you.**
+
+### Other Models:
+
+In addition to resnet18, we have   
+ALEXNET:   
+
+    model = torchvision.models.alexnet(pretrained=True)
+    model.classifier[-1] = torch.nn.Linear(4096, len(dataset.categories))
+    
+SQUEEZENET:   
+
+    model = torchvision.models.squeezenet1_1(pretrained=True)
+    model.classifier[1] = torch.nn.Conv2d(512, len(dataset.categories), kernel_size=1)  
+    model.num_classes = len(dataset.categories)
+    
+RESNET34   
+
+    model = torchvision.models.resnet34(pretrained=True)
+    model.fc = torch.nn.Linear(512, len(dataset.categories))
+
+If you are finding that your model isn't predicting well, and you have controlled for other reasonable factors, consider trying out a new pre-trained model! No harm no foul.
 
 ### Starting the TX/RX:
 To start the communication, run:
