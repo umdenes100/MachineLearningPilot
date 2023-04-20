@@ -16,6 +16,33 @@
 
 # UPDATES AND NOTES
 
+## Most Recent ML Email
+
+    Hello ENES100 Machine Learning Teams,
+
+        For the rest of the semester, I will deliver some updates about the ML mission hardware via email.
+    Here are some updates for today:
+
+    1. I may have led some people in the wrong direction in the past, but I want to formally say that you must power the    
+    buffer with 5V and GND from the Arduino. Otherwise, the buffer will not work.
+
+    2. We have identified 2 major bugs: 
+            i. The coordinates returned by the ESPCAM are sometimes very wrong. We are working on a fix,    
+            but we recommend for now using the normal WIFI modules for navigation if you need to for MS6 (the new library    
+            should still be compatible with the normal WIFI modules as long as you change .getX() to .location.x, etc.).
+            ii. The Jetson returns incorrect numbers to the Arduino for the prediction return.    
+            We are working on a fix as well. To test your model and the prediction for now, add print statements   
+            in your handler function.
+
+    We apologize for the errors in our system, we are working to quickly fix it.
+
+    3. The ML Workshop will be hosted again this Friday from 11am-1pm and 2-3pm.
+
+    -Josh
+
+If you are not recieving emails and you wish to be, fill out [this form](https://forms.gle/zpUavY7eQXdhBS8j7).
+
+
 ## **NOTICES!!!!!!**
 
 **YOU MUST POWER THE BUFFER WITH 5V AND GROUND FOR EVERYTHING TO WORK**   
