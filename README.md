@@ -1,26 +1,73 @@
+# Spring 2023 Jetson Documentation
+
+# Menu
+
+[Updates and Notes - General Announcements](https://umdenes100.github.io/MachineLearningPilot/#updates-and-notes)   
+[System Overview - How the ML Prediction System works and what you will do](https://umdenes100.github.io/MachineLearningPilot/#system-overview)   
+[WiFi Camera Info - Info on the ML WiFi cameras and the training Cameras](https://umdenes100.github.io/MachineLearningPilot/#wifi-camera-info)   
+[New Library Documentation for ML teams](https://umdenes100.github.io/MachineLearningPilot/#new-library)   
+[Jetson First Time Setup](https://umdenes100.github.io/MachineLearningPilot/#jetson-first-time-setup)   
+[Main Jetson Documentation - info on how to write script, collect data, etc.](https://umdenes100.github.io/MachineLearningPilot/#jetson-documentation)   
+[Jetson Functions on Arduino](https://umdenes100.github.io/MachineLearningPilot/#use-of-jetson-functions-on-arduino)   
+[Training](https://umdenes100.github.io/MachineLearningPilot/#training)    
+[Debugging, FAQ, Recap](https://umdenes100.github.io/MachineLearningPilot/#debugging)    
+
+
+
 # UPDATES AND NOTES
 
-# **NOTICES!!!!!!**
+## Most Recent ML Email
 
-1. **YOU NEED TO UPDATE YOUR ENES100 LIBRARY TO THE ML EDITION**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
+    Hello ENES100 Machine Learning Teams,
 
-2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER** if you plan to use the training image library function. Otherwise, the images **WILL NOT SAVE**.
+        For the rest of the semester, I will deliver some updates about the ML mission hardware via email.
+    Here are some updates for today:
+
+    1. I may have led some people in the wrong direction in the past, but I want to formally say that you must power the    
+    buffer with 5V and GND from the Arduino. Otherwise, the buffer will not work.
+
+    2. We have identified 2 major bugs: 
+            i. The coordinates returned by the ESPCAM are sometimes very wrong. We are working on a fix,    
+            but we recommend for now using the normal WIFI modules for navigation if you need to for MS6 (the new library    
+            should still be compatible with the normal WIFI modules as long as you change .getX() to .location.x, etc.).
+            ii. The Jetson returns incorrect numbers to the Arduino for the prediction return.    
+            We are working on a fix as well. To test your model and the prediction for now, add print statements   
+            in your handler function.
+
+    We apologize for the errors in our system, we are working to quickly fix it.
+
+    3. The ML Workshop will be hosted again this Friday from 11am-1pm and 2-3pm.
+
+    -Josh
+
+If you are not recieving emails and you wish to be, fill out [this form](https://forms.gle/zpUavY7eQXdhBS8j7).
+
+
+## **NOTICES!!!!!!**
+
+**YOU MUST POWER THE BUFFER WITH 5V AND GROUND FOR EVERYTHING TO WORK**   
+
+1. **UPDATE LIBRARY FOR BUG FIXES IF YOU DOWNLOADED ML LIBRARY UPDATE BEFORE 4/14**. To do so, download the zip from [this link](https://drive.google.com/drive/folders/1GIisAZlpRnHg12CQNAFu0rPoyvNGcJiR?usp=sharing) and extract it in your Arduino libraries folder. **Make sure to delete the previous library version**.
+
+2. **YOU NEED TO MAKE A FOLDER CALLED `data` OUTSIDE OF THE MISSION FOLDER** if you plan to use the training image library function. Otherwise, the images **WILL NOT SAVE**. If you are using the training cameras, this does not affect you.
 
 # System Overview
 ![image](https://user-images.githubusercontent.com/99224714/228002077-e242777d-0461-481b-b563-879b6cb3a2f5.png)
 
 ![image](https://user-images.githubusercontent.com/99224714/228002480-01052b31-b609-4923-b833-0dfe20391cf9.png)
 
+# WiFi Camera Info
+
+![image](https://user-images.githubusercontent.com/99224714/232099480-b2367cb3-0fef-46ce-8131-8f56e96ed30e.png)
+
 ![done](https://user-images.githubusercontent.com/99224714/229552578-56e42349-7b9f-48c0-b146-f26e0e1f9d49.png)
 
-The ESPCAM models are located here: https://www.printables.com/model/280978-esp32-cam-case
-
-# Camera Info
+The ESPCAM case models are located [here](https://www.printables.com/model/280978-esp32-cam-case)
 
 ## Training Camera Instructions
 
-1. Connect to the vision system wifi 
-2. Connect to the IP on the cam `http://192.168.X.XX` via web browser. **MAKE SURE YOU ARE CONNECTED TO VISION SYSTEM WIFI**.
+1. Connect to the vision system wifi   
+2. Connect to the IP on the cam `http://192.168.X.XX` via web browser. **MAKE SURE YOU ARE CONNECTED TO VISION SYSTEM WIFI**.  
 3. Note: You will only need to power the cam (5 or 3.3 v, gnd) (5v is the top right pin when looking at back of cam, gnd is pin below that). You **DO NOT** need tx and rx for this.
 4. Scroll to the bottom and select get still to capture an image.
 ![image](https://user-images.githubusercontent.com/99224714/228018845-726b1242-0a19-457f-a678-247fbb817699.png)
@@ -47,7 +94,14 @@ There is not enough power to the camera, try making sure your wiring checks out 
 The camera is having issues. Try restarting the ESP using the reset button on the board (use a thin object).
 
 ### Other
-Ask LTF Josh or Forrest, or email jstone14@terpmail.umd.edu and use a different camera.
+Ask LTF Josh or LTF Forrest, or email jstone14@terpmail.umd.edu and use a different camera.
+
+# New Library
+The new library introduces some changes:
+1. Instead of location.x, location.y, location.theta, you will instead use Enes100.getX(), Enes100.getY(), and Enes100.getTheta() to get the coordinate values.
+2. To report the coordinate for your mission, you will need to create a Coordinate object to send to the Enes100.mission() function. The example code in the new library shows how to do this, and it is shown below.
+
+![image](https://user-images.githubusercontent.com/99224714/231557337-55991f53-6b0b-4ba2-b26d-0c44dc4bf408.png)
 
 # Jetson First Time Setup
 
@@ -100,7 +154,7 @@ To define our device using CUDA, we run:
 `device = torch.device('cuda')`
 
 We will be using resnet18, a neural network with 18 layers, many of which have been pre-trained specifically for image processing.
-To use resnet18, we define our model as: 
+**IF YOU WISH TO TEST ANOTHER PRETRAINED MODEL, SEE [THIS SECTION](https://umdenes100.github.io/MachineLearningPilot/#other-models)** To use resnet18, we define our model as: 
 
 `model = torchvision.models.resnet18(pretrained=True)`
 
@@ -136,6 +190,44 @@ You must also `return output.argmax()` to get the index to the communication sys
 
 Because it gives the index, **it is crucial that you define the same category array/enums/#DEFINEs/etc. on your Arduino as you did when you created the model**.
 
+However, **you cant send whatever you want**, as long as it's an integer. One thing you could do is send the probability for each category. The following code gets and prints the probability for each.   
+
+    for i, score in enumerate(list(output)):
+        print(str(i) + " " + str(score))   
+        
+You could format a string of integers and wrap it with the int() constructor. To make sure they are all integers, use rounding and multiplying by factors of 10 to convert your decimal probabilities into integers.   
+    
+    results = ""
+    for i, score in enumerate(list(output)):
+        results = results + str(i) + str((round(score,2)*100))
+    return int(results)
+        
+The results of this may look something like `0544414556`, which could be interpreted as 0 (category 1): 54.44% chance | 1 (category 2): 45.56% chance.
+Note: **This code is untested and I just made it up right now, so don't just copy and paste expecting it to fully work.**
+
+**These are just two options of many. Do whatever works for you.**
+
+### Other Models:
+
+In addition to resnet18, we have   
+ALEXNET:   
+
+    model = torchvision.models.alexnet(pretrained=True)
+    model.classifier[-1] = torch.nn.Linear(4096, len(dataset.categories))
+    
+SQUEEZENET:   
+
+    model = torchvision.models.squeezenet1_1(pretrained=True)
+    model.classifier[1] = torch.nn.Conv2d(512, len(dataset.categories), kernel_size=1)  
+    model.num_classes = len(dataset.categories)
+    
+RESNET34   
+
+    model = torchvision.models.resnet34(pretrained=True)
+    model.fc = torch.nn.Linear(512, len(dataset.categories))
+
+If you are finding that your model isn't predicting well, and you have controlled for other reasonable factors, consider trying out a new pre-trained model! No harm no foul.
+
 ### Starting the TX/RX:
 To start the communication, run:
 
@@ -150,6 +242,7 @@ To run the script on the Jetson:
 2. Make sure you are in the same directory as your script. If not, use the `cd` command to enter into it
     1. Example: cd Your/Directory/Location/
 3. Type: `python3 script_name.py` to run your script
+![image](https://user-images.githubusercontent.com/99224714/232099576-42766621-1175-4c72-91cf-ff0c5c854db9.png)
 4. Your Jetson should now be able to send and receive messages!
 
 # Use of Jetson Functions on Arduino
