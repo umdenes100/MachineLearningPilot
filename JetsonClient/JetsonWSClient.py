@@ -23,6 +23,8 @@ def preprocess(image):
     image_str = io.BytesIO(image)
     #image_str = PIL.Image.frombytes(data=image_str,mode='RGB',size=(224,224),decoder_name='jpeg')
     picture = PIL.Image.open(image_str)
+    #picture = picture.resize((224, 224))
+    #picture = picture.resize((224, 224), resample=1)
     picture.save('./curr.jpeg','JPEG')
     #print(picture.format)
     #picture.show()

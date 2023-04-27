@@ -291,7 +291,8 @@ void onMessageCallback(WebsocketsMessage message) {
 #endif
   }
   else if (strcmp(doc["op"], "prediction") == 0) {
-    int pred = doc["predicftion"];
+    int pred = doc["prediction"];
+    Serial.println(pred);
     arduinoSerial.write((byte *) &pred, 2);
   }
 }
