@@ -31,7 +31,7 @@
 // WiFi network name
 #define ROOM 1215
 #if ROOM == 1116  //big lab
-#define WIFI_NETWORK "VisionSystem1116-2.4"
+#define WIFI_NETWORK "VisionSystem1116-2.4" 
 #elif ROOM == 1215 //small Lab
 #define WIFI_NETWORK "VisionSystem1215-2.4"
 #endif
